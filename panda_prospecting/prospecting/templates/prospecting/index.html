@@ -1,0 +1,9 @@
+{% if latest_account_list %}
+    <ul>
+        {% for account in latest_account_list %}
+            <li><a href="{% url 'prospecting:detail' account.id %}">{{ account.account_text }}</a></li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>No accounts have been added.</p>
+{% endif %}
