@@ -16,8 +16,12 @@ class Account(models.Model):
         return self.account_text
 
     def was_added_recently(self):
-        """Docstring goes here."""
-        return self.date_added >= timezone.now() - datetime.timedelta(days=1)
+        """
+        Returns boolean if an account was added by a user within a
+        designated timeframe.
+        """
+        now = timezone.now()
+        return now - datetime.timedelta(days=1) <= self.date_added <= now
 
 
 class Prospect(models.Model):
@@ -25,7 +29,7 @@ class Prospect(models.Model):
 
     account = models.ForeignKey(Account, on_delete=models.CASCADE)
     prospect_text = models.CharField(max_length=200)
-    votes = models.IntegerField(default=0)
+    prospect_views = models.IntegerField(default=0)
 
     def __str__(self):
         """Returns a string of prospect text to interact with interface."""

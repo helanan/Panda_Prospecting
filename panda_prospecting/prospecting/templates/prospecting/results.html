@@ -1,0 +1,9 @@
+<h1>{{ question.question_text }}</h1>
+
+<ul>
+    {% for prospect in account.prospect_set.all %}
+    <li>{{ prospect.prospect_text }} -- {{ prospect.prospect_views }} View{{ prospect.views | pluralize }}</li>
+    {% endfor %}
+</ul>
+
+<a href="{%  url 'prospecting:detail' account.id %}">View Another Prospect?</a>

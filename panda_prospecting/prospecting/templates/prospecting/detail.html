@@ -1,0 +1,12 @@
+<h1>{{ account.account_text }}</h1>
+
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+<form action="{% url 'prospecting:prospect_view' account.id %}" method="post">
+{% csrf_token %}
+{% for prospect in account.prospect_set.all %}
+    <input type="radio" name="prospect" id="prospect{{ forloop.counter }}" value="{{ prospect.id }}" />
+    <label for="prospect{{ forloop.counter }}">{{ prospect.prospect_text }}</label><br />
+{% endfor %}
+<input type="submit" value="View" />
+</form>

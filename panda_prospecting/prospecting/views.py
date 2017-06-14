@@ -1,21 +1,46 @@
-from django.http import HttpResponse
+from django.shortcuts import get_object_or_404, render
+from django.http import HttpResponseRedirect
+from django.urls import reverse
+from django.views import generic
 
-from .models import Account
+from .models import Prospect, Account
 
 
-def index(request):
+class IndexView(generic.ListView):
     """Docstring goes here."""
-    latest_account_list = Account.objects.order_by('date_added')[:5]
-    output = ', '.join([q.account_text for q in latest_account_list])
-    return HttpResponse(output)
+
+    template_name = 'prospecting/index.html'
+    context_object_name = 'latest_account_list'
+
+    def get_queryset(self):
+        """Return the last five added accounts."""
+        return Account.objects.order_by('-date_added')[:5]
+
 
 # Create your views here.
-def detail(request, account_id):
-    return HttpResponse("You're looking at an account%s." % account_id)
+class DetailView(generic.DetailView):
+    """Docstring goes here."""
+    model = Account
+    template_name = 'prospecting/detail.html'
 
-def results(request, account_id):
-    response = "You're looking at the results of accounts %s."
-    return HttpResponse(response % account_id)
+class ResultsView(generic.DetailView):
+    model = Account
+    template_name = 'prospecting/results.html'
 
-def vote(request, account_id):
-    return HttpResponse("You're voting on an account %s." % account_id)
+def ProspectViewView(request, account_id):
+    account = get_object_or_404(Account, pk=account_id)
+    try:
+        selected_prospect = account.prospect_set.get(pk=request.POST['prospect'])
+    except (KeyError, Prospect.DoesNotExist):
+        # Redisplay the prospect selection form.
+        return render(request, 'prospecting/detail.html', {
+            'account': account,
+            'error_message': "You didnt select a prospect.",
+        })
+    else:
+        selected_prospect.prospect_views += 1
+        selected_prospect.save()
+        # Always return an HttpResponseRedirect after successfully dealing
+        # with POST data. This prevents data from being posted twice if a user
+        # hits the back button
+    return HttpResponseRedirect(reverse('prospecting:results', args=(account.id,)))
