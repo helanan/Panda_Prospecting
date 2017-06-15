@@ -36,14 +36,14 @@ class AccountMethodTests(TestCase):
         self.assertIs(recent_account.was_added_recently(), True)
 
 
-def create_account(account_text, days):
+def create_account(account_name, days):
     """
-    Creates an account with the given `account_text` and published the given
+    Creates an account with the given `account_name` and published the given
     number of `days` offset to now (negative for accounts published in the
     past, positive for accounts that have yet to be published).
     """
     time = timezone.now() + datetime.timedelta(days=days)
-    return Account.objects.create(account_text=account_text, date_added=time)
+    return Account.objects.create(account_name=account_name, date_added=time)
 
 class AccountViewTests(TestCase):
     def test_index_view_with_no_accounts(self):
@@ -60,7 +60,7 @@ class AccountViewTests(TestCase):
         Accounts with a date_added in the past should be displayed on the index
         page.
         """
-        create_account(account_text="Past account.", days=-30)
+        create_account(account_name="Past account.", days=-30)
         response = self.client.get(reverse('prospecting:index'))
         self.assertQuerysetEqual(
             response.context['latest_account_list'], ['<Account: Past account.>']
@@ -71,7 +71,7 @@ class AccountViewTests(TestCase):
         Accounts with a date_added in the future should not be displayed on the
         index page.
         """
-        create_account(account_text="Future account.", days=30)
+        create_account(account_name="Future account.", days=30)
         response = self.client.get(reverse('prospecting:index'))
         self.assertContains(response, "No accounts have been added.")
         self.assertQuerysetEqual(response.context['latest_account_list'], [])
@@ -80,8 +80,8 @@ class AccountViewTests(TestCase):
         """Even if both past and future accounts exist, only past accounts
         should be displayed.
         """
-        create_account(account_text="Past account.", days=-30)
-        create_account(account_text="Future account.", days=30)
+        create_account(account_name="Past account.", days=-30)
+        create_account(account_name="Future account.", days=30)
         response = self.client.get(reverse('polling:index'))
         self.assertQuerysetEqual(
             response.context['latest_account_list'], ['<Account: Past account.>']
@@ -90,8 +90,8 @@ class AccountViewTests(TestCase):
         """
         The accounts index page may display multiple accounts.
         """
-        create_account(account_text="Past account 1.", days=-30)
-        create_account(account_text="Past account 2.", days=-5)
+        create_account(account_name="Past account 1.", days=-30)
+        create_account(account_name="Past account 2.", days=-5)
         response = self.client.get(reverse('prospecting:index'))
         self.assertQuerysetEqual(
             response.context['latest_account_list'], ['<Account: Past account 2.>', '<Account: Past account 1.>']
@@ -103,7 +103,7 @@ class AccountIndexDetailTest(TestCase):
         The detail view of an account with a date_added in the future should return
         a 404 not found.
         """
-        future_account = create_account(account_text='Future account.', days=5)
+        future_account = create_account(account_name='Future account.', days=5)
         url = reverse('prospecting:detail', args=(future_account.id,))
         response = self.client.get(url)
         self.assertEqual(response.status_code, 404)
@@ -113,7 +113,7 @@ class AccountIndexDetailTest(TestCase):
         The detail view of an account with a date_added in the past should
         display the account's text.
         """
-        past_account = create_account(account_text='Past Account.', days=-5)
+        past_account = create_account(account_name='Past Account.', days=-5)
         url = reverse('prospecting:detail', args=(past_account.id,))
         response = self.client.get(url)
-        self.assertContains(response, past_account.account_text)
+        self.assertContains(response, past_account.account_name)
