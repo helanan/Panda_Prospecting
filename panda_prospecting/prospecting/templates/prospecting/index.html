@@ -1,7 +1,10 @@
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'prospecting/style.css' %}" />
+<h1>My Accounts</h1>
 {% if latest_account_list %}
     <ul>
         {% for account in latest_account_list %}
-            <li><a href="{% url 'prospecting:detail' account.id %}">{{ account.account_text }}</a></li>
+            <li><a href="{% url 'prospecting:detail' account.id %}">{{ account.account_name }}</a></li>
         {% endfor %}
     </ul>
 {% else %}

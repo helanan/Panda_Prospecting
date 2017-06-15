@@ -1,4 +1,24 @@
-<h1>{{ account.account_text }}</h1>
+<h1>{{ account.account_name }}</h1>
+<h1>Account Details:</h1>
+<ul>
+    <li>Date Added: {{account.date_added}}</li>
+    <li>General E-mail: {{account.email}}</li>
+    <li>Phone: {{account.phone}}</li>
+    <li>Address:
+        <ul>
+        <li>Street: {{account.street}}</li>
+        <li>City: {{account.city}}</li>
+        <li>State: {{account.state}}</li>
+        <li>Zipcode: {{account.zipcode}}</li>
+        <li>Country: {{account.country}}</li>
+    </ul>
+    </li>
+    <li>Linked In: {{account.linkedin}}</li>
+    <li>Account Status: {{account.account_status}}</li>
+</ul>
+<p>Notes: {{account.account_notes}}<p>
+
+<h3>Available Prospects:</h3>
 
 {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
 
@@ -6,7 +26,8 @@
 {% csrf_token %}
 {% for prospect in account.prospect_set.all %}
     <input type="radio" name="prospect" id="prospect{{ forloop.counter }}" value="{{ prospect.id }}" />
-    <label for="prospect{{ forloop.counter }}">{{ prospect.prospect_text }}</label><br />
+    <label for="prospect{{ forloop.counter }}">{{ prospect.full_name }}</label><br />
 {% endfor %}
+<br />
 <input type="submit" value="View" />
 </form>

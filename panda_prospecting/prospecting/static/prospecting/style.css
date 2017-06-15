@@ -1,0 +1,9 @@
+li a {
+    color: white;
+}
+
+body {
+    background: grey url("images/1907.svg") no-repeat right bottom;
+    max-height: 300px;
+    max-width: 300px;
+}

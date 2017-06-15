@@ -2,6 +2,7 @@ from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.views import generic
+from django.utils import timezone
 
 from .models import Prospect, Account
 
@@ -13,7 +14,8 @@ class IndexView(generic.ListView):
     context_object_name = 'latest_account_list'
 
     def get_queryset(self):
-        """Return the last five added accounts."""
+        """Return the last five added accounts (not including those set to be
+        published in the future)."""
         return Account.objects.order_by('-date_added')[:5]
 
 
@@ -22,6 +24,13 @@ class DetailView(generic.DetailView):
     """Docstring goes here."""
     model = Account
     template_name = 'prospecting/detail.html'
+
+    def get_queryset(self):
+        """
+        Excludes any accounts that aren't added yet.
+        """
+        return Account.objects.filter(date_added__lte=timezone.now())
+
 
 class ResultsView(generic.DetailView):
     model = Account

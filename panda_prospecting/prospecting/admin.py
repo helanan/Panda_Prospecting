@@ -1,7 +1,21 @@
 from django.contrib import admin
 
-from .models import Account
-
-admin.site.register(Account)
+from .models import Prospect, Account
 
 # Register your models here.
+class ProspectInline(admin.TabularInline):
+    model = Prospect
+    extra = 3
+
+class AccountAdmin(admin.ModelAdmin):
+    fieldsets = [
+        (None, {'fields': ['account_name']}),
+        ('Date information', {'fields': ['date_added']}),
+        ]
+    inlines = [ProspectInline]
+    list_display = ('account_name', 'date_added', 'was_added_recently')
+    list_filter = ['date_added']
+    search_fields = ['account_name']
+
+
+admin.site.register(Account, AccountAdmin)
