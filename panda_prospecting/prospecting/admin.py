@@ -11,9 +11,10 @@ class AccountAdmin(admin.ModelAdmin):
     fieldsets = [
         (None, {'fields': ['account_name']}),
         ('Date information', {'fields': ['date_added']}),
+        ('Email information', {'fields': ['email']})
         ]
     inlines = [ProspectInline]
-    list_display = ('account_name', 'date_added', 'was_added_recently')
+    list_display = ('account_name', 'date_added', 'email', 'was_added_recently')
     list_filter = ['date_added']
     search_fields = ['account_name']
 
