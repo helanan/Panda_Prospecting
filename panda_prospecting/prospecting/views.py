@@ -5,6 +5,7 @@ from django.views import generic
 from django.utils import timezone
 
 from .models import Prospect, Account
+from .forms import AccountForm, ProspectForm
 
 
 class IndexView(generic.ListView):
@@ -16,7 +17,7 @@ class IndexView(generic.ListView):
     def get_queryset(self):
         """Return the last five added accounts (not including those set to be
         published in the future)."""
-        return Account.objects.order_by('-date_added')[:5]
+        return Account.objects.order_by('-date_added')
 
 
 # Create your views here.
@@ -53,3 +54,38 @@ def ProspectViewView(request, account_id):
         # with POST data. This prevents data from being posted twice if a user
         # hits the back button
     return HttpResponseRedirect(reverse('prospecting:results', args=(account.id,)))
+
+def new_account(request):
+    """Add a new account."""
+    if request.method != 'POST':
+        # No data submitted, create a blank form.
+        form = AccountForm()
+    else:
+        # POST data submitted; process data
+        form = AccountForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('prospecting:index'))
+
+    context = {'form': form}
+    return render(request, 'prospecting/new_account.html', context)
+
+def new_prospect(request, account_id):
+    """Adds a new prospect for a selected account."""
+    account = Account.objects.get(id=account_id)
+
+    if request.method != 'POST':
+        # No data submitted; create a blank form.
+        form = ProspectForm()
+
+    else:
+        # POST data submitted; process data.
+        form = ProspectForm(data=request.POST)
+        if form.is_valid():
+            new_prospect = form.save(commit=False)
+            new_prospect.account = account
+            new_prospect.save()
+            return HttpResponseRedirect(reverse('prospecting:results', args=[account_id]))
+
+    context = {'account': account, 'form': form}
+    return render(request, 'prospecting/new_prospect.html', context)

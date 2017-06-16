@@ -19,7 +19,10 @@ class Account(models.Model):
     country = models.CharField(max_length=30)
     linkedin = models.URLField(max_length=30)
     account_status = models.CharField(max_length=30)
-    account_notes = models.TextField
+    account_notes = models.TextField()
+
+    class Meta:
+        verbose_name_plural = 'accounts'
 
     def __str__(self):
         """Returns a string of account text to interact with interface."""
@@ -54,8 +57,11 @@ class Prospect(models.Model):
     country = models.CharField(max_length=30)
     linkedin = models.URLField(max_length=30)
     prospect_status = models.CharField(max_length=30)
-    prospect_notes = models.TextField
+    prospect_notes = models.TextField()
     prospect_views = models.IntegerField(default=0)
+
+    class Meta:
+        verbose_name_plural = 'prospects'
 
     def __str__(self):
         """Returns a string of prospect text to interact with interface."""

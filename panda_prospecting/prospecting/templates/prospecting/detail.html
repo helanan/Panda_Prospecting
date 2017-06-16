@@ -1,7 +1,8 @@
+<a href="{% url 'prospecting:index' %}">Home</a> < <a href="{% url 'prospecting:detail' account.id%}">Account Details</a>
 <h1>{{ account.account_name }}</h1>
 <h1>Account Details:</h1>
+<p>Date Created: {{account.date_added}}<p>
 <ul>
-    <li>Date Added: {{account.date_added}}</li>
     <li>General E-mail: {{account.email}}</li>
     <li>Phone: {{account.phone}}</li>
     <li>Address:
@@ -16,7 +17,7 @@
     <li>Linked In: {{account.linkedin}}</li>
     <li>Account Status: {{account.account_status}}</li>
 </ul>
-<p>Notes: {{account.account_notes}}<p>
+<p>Notes: {{account.account_notes|linebreaks}}<p>
 
 <h3>Available Prospects:</h3>
 
@@ -31,3 +32,4 @@
 <br />
 <input type="submit" value="View" />
 </form>
+<a href="{% url 'prospecting:new_prospect' account.id%}">Add a new prospect:</a></p>
