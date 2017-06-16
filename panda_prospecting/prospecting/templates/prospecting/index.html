@@ -1,5 +1,6 @@
 {% load static %}
 <link rel="stylesheet" type="text/css" href="{% static 'prospecting/style.css' %}" />
+<a href="{% url 'prospecting:index' %}">Home</a>
 <h1>My Accounts</h1>
 {% if latest_account_list %}
     <ul>
@@ -10,3 +11,4 @@
 {% else %}
     <p>No accounts have been added.</p>
 {% endif %}
+    <a href="{% url 'prospecting:new_account' %}">Add a new account:</a>

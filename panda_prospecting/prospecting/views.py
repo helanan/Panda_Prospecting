@@ -5,6 +5,7 @@ from django.views import generic
 from django.utils import timezone
 
 from .models import Prospect, Account
+from .forms import AccountForm
 
 
 class IndexView(generic.ListView):
@@ -53,3 +54,18 @@ def ProspectViewView(request, account_id):
         # with POST data. This prevents data from being posted twice if a user
         # hits the back button
     return HttpResponseRedirect(reverse('prospecting:results', args=(account.id,)))
+
+def new_account(request):
+    """Add a new account."""
+    if request.method != 'POST':
+        # No data submitted, create a blank form.
+        form = AccountForm()
+    else:
+        # POST data submitted; process data
+        form = AccountForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('prospecting:index'))
+
+    context = {'form': form}
+    return render(request, 'prospecting/new_account.html', context)
