@@ -1,0 +1,9 @@
+{% block content %}
+
+    <p>Add a new prospect:</p>
+    <form action="{% url 'prospecting:new_prospect' account.id %}" method='post'>
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button name="submit">Add Prospect</button>
+    </form>
+{% endblock content %}
