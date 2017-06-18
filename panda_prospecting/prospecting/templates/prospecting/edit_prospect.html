@@ -1,0 +1,11 @@
+{% block content %}
+
+    <p>Edit Prospect:</p>
+
+    <form action="{% url 'prospecting:edit_prospect' prospect.id%}" method='post'>
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button name="submit"> Save Changes </button>
+    </form>
+
+{% endblock content %}

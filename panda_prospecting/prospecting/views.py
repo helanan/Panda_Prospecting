@@ -89,3 +89,37 @@ def new_prospect(request, account_id):
 
     context = {'account': account, 'form': form}
     return render(request, 'prospecting/new_prospect.html', context)
+
+def edit_account(request, account_id):
+    """Edit an existing account."""
+    account = Account.objects.get(id=account_id)
+
+    if request.method != 'POST':
+        # Initial request; pre-fill form with the current prospect info
+        form = AccountForm(instance=account)
+    else:
+        # POST data submitted; process data.
+        form = AccountForm(instance=account, data=request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('prospecting:detail', args=[account.id]))
+    context = {'account': account, 'form': form}
+    return render(request, 'prospecting/edit_account.html', context)
+
+
+def edit_prospect(request, prospect_id):
+    """Edit an existing prospect."""
+    prospect = Prospect.objects.get(id=prospect_id)
+    account = prospect.account
+
+    if request.method != 'POST':
+        # Initial request; pre-fill form with the current prospect info
+        form = ProspectForm(instance=prospect)
+    else:
+        # POST data submitted; process data.
+        form = ProspectForm(instance=prospect, data=request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('prospecting:results', args=[account.id]))
+    context = {'prospect': prospect, 'account': account, 'form': form}
+    return render(request, 'prospecting/edit_prospect.html', context)

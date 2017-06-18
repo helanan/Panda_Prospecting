@@ -19,6 +19,8 @@
 </ul>
 <p>Notes: {{account.account_notes|linebreaks}}<p>
 
+<a href="{% url 'prospecting:edit_account' account.id %}">Edit Account</a>
+
 <h3>Available Prospects:</h3>
 
 {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
@@ -28,6 +30,7 @@
 {% for prospect in account.prospect_set.all %}
     <input type="radio" name="prospect" id="prospect{{ forloop.counter }}" value="{{ prospect.id }}" />
     <label for="prospect{{ forloop.counter }}">{{ prospect.full_name }}</label><br />
+    <a href="{% url 'prospecting:edit_prospect' prospect.id %}">Edit Prospect</a>
 {% endfor %}
 <br />
 <input type="submit" value="View" />
