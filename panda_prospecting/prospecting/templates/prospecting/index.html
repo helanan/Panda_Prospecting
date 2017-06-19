@@ -1,16 +1,57 @@
-{% load static %}
-<link rel="stylesheet" type="text/css" href="{% static 'prospecting/style.css' %}" />
-<a href="{% url 'prospecting:index' %}">Home</a>
-<h1>My Latest Accounts</h1>
-{% if latest_account_list %}
-    <ul>
-        {% for account in latest_account_list %}
-            <li><a href="{% url 'prospecting:detail' account.id %}">{{ account.account_name }}</a></li>
-        {% endfor %}
-    </ul>
+{% extends "prospecting/base.html" %} {% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'prospecting/style.css' %}" /> {% block header %}
+<div class='jumbotron'>
+    <h1 class="orange-text">Prospecting Panda</h1>
+</div>
+{% endblock header %} {% block content %}
+<div class="row">
+   <div class="col s4">
+     <div class="card">
+       <div class="card-image">
+         <img src="static/prospecting/images/008-panda-2.svg" height="200">
+       </div>
+       <div class="card-content">
+         <p>Register To Get Started</p>
+       </div>
+       <div class="card-action">
+    <a href="{% url 'users:register' %}" class="green-text"> REGISTER </a>
+</div>
+  </div>
+</div>
+   <div class="col s4">
+     <div class="card">
+       <div class="card-image">
+         <img src="static/prospecting/images/002-asian.svg" height="200">
+       </div>
+       <div class="card-content">
+         <p>Add a new Account</p>
+       </div>
+       <div class="card-action">
+           <a href="{% url 'prospecting:new_account' %}" class="green-text"> ADD ACCOUNT </a>
+       </div>
+         </div>
+       </div>
+   <div class="col s4">
+     <div class="card">
+       <div class="card-image">
+         <img src="static/prospecting/images/001-grass.svg" height="200">
+       </div>
+       <div class="card-content">
+         <p>Add a new Prospect</p>
+       </div>
+       <div class="card-action">
+           <a href="{% url 'prospecting:index' %}" class="green-text"> ADD PROSPECT </a>
+       </div>
+         </div>
+       </div>
+       </div>
+<h1>My Latest Accounts</h1> {% if latest_account_list %}
+<ul>
+    {% for account in latest_account_list %}
+    <li><a href="{% url 'prospecting:detail' account.id %}">{{ account.account_name }}</a></li>
+    {% endfor %}
+</ul>
 {% else %}
-    <p>No accounts have been added.</p>
+<p>No accounts have been added.</p>
 {% endif %}
-
-
-<a href="{% url 'prospecting:new_account' %}">Add a new account:</a>
+{% endblock content %}

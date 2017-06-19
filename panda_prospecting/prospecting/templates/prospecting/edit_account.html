@@ -1,12 +1,13 @@
 {% extends "prospecting/base.html" %} {% load static %}
 <link rel="stylesheet" type="text/css" href="{% static 'prospecting/style.css' %}" /
-
 {% block content %}
 
-    <p>Add a new prospect:</p>
-    <form action="{% url 'prospecting:new_prospect' account.id %}" method='post'>
+    <p>Edit Account:</p>
+
+    <form action="{% url 'prospecting:edit_account' account.id %}" method='post'>
         {% csrf_token %}
         {{ form.as_p }}
-        <button name="submit" class="waves-effect waves-light btn">Add Prospect</button>
+        <button name="submit" class="waves-effect waves-light btn"> Save Changes </button>
     </form>
+
 {% endblock content %}

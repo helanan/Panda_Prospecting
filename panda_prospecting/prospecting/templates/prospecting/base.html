@@ -1,4 +1,52 @@
-<p>
-    <a href="{% url 'prospecting:index' %}">Prospecting Panda</a>
-</p>
-{% block content %}{% endblock content %}
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html lange="en">
+<head>
+    <!--Import Google Icon Font-->
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link type="text/css" rel="stylesheet" href="{% static 'materialize/bin/materialize.css' %}"  media="screen,projection"/>
+
+    <title>Prospecting Panda</title>
+</head>
+<body>
+    <!-- Static Navbar -->
+    <nav class="navbar navbar-default navbar-static-top">
+        <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="{% url 'prospecting:index' %}">
+                    Prospecting Panda</a>
+                </div>
+                <div id="navbar" class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        {% if user.is_authenticated %}
+                        <li><a>Hello, {{ user.username }}.</a></li>
+                        <li><a href="{% url 'users:logout' %}"> Log Out </a></li>
+                        {% else %}
+                        <li><a href="{% url 'users:register' %}"> Register </a></li>
+                        <li><a href="{% url 'users:login' %}"> Log In </a></li>
+                        {% endif %}
+                    </ul>
+                </div><!--/.nav-collapse-->
+
+            </div>
+        </nav>
+        <div class="container">
+            <div class="page-header">
+                {% block header %}{% endblock header %}
+            </div>
+            <div>
+                {% block content %}{% endblock content %}
+            </div>
+        </div> <!-- /container -->
+        {% block footer %}
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="{% static 'materialize/bin/materialize.js' %}"></script>
+{% endblock %}
+    </body>
+    </html>
