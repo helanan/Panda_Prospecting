@@ -10,7 +10,7 @@ urlpatterns = [
     url(r'^(?P<pk>[0-9]+)/$', views.DetailView.as_view(), name='detail'),
     # ex: /prospecting/5/results/
     url(r'^(?P<pk>[0-9]+)/results/$', views.ResultsView.as_view(), name='results'),
-    # ex: /prospecting/5/views/
+    # ex: /prospecting/5/prospect_views/
     url(r'^(?P<account_id>[0-9]+)/prospect_view/$', views.ProspectViewView, name='prospect_view'),
     # page for adding a new account
     url(r'^new_account/$', views.new_account, name='new_account'),

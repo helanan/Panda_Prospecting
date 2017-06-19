@@ -1,10 +1,11 @@
 from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponseRedirect
 from django.urls import reverse
+from django.contrib.auth.decorators import login_required
 from django.views import generic
 from django.utils import timezone
 
-from .models import Prospect, Account
+from .models import Prospect, Account, Industry
 from .forms import AccountForm, ProspectForm
 
 
@@ -21,6 +22,7 @@ class IndexView(generic.ListView):
 
 
 # Create your views here.
+
 class DetailView(generic.DetailView):
     """Docstring goes here."""
     model = Account
@@ -37,6 +39,8 @@ class ResultsView(generic.DetailView):
     model = Account
     template_name = 'prospecting/results.html'
 
+
+@login_required
 def ProspectViewView(request, account_id):
     account = get_object_or_404(Account, pk=account_id)
     try:
@@ -55,6 +59,7 @@ def ProspectViewView(request, account_id):
         # hits the back button
     return HttpResponseRedirect(reverse('prospecting:results', args=(account.id,)))
 
+@login_required
 def new_account(request):
     """Add a new account."""
     if request.method != 'POST':
@@ -70,6 +75,7 @@ def new_account(request):
     context = {'form': form}
     return render(request, 'prospecting/new_account.html', context)
 
+@login_required
 def new_prospect(request, account_id):
     """Adds a new prospect for a selected account."""
     account = Account.objects.get(id=account_id)
@@ -90,6 +96,7 @@ def new_prospect(request, account_id):
     context = {'account': account, 'form': form}
     return render(request, 'prospecting/new_prospect.html', context)
 
+@login_required
 def edit_account(request, account_id):
     """Edit an existing account."""
     account = Account.objects.get(id=account_id)
@@ -106,7 +113,7 @@ def edit_account(request, account_id):
     context = {'account': account, 'form': form}
     return render(request, 'prospecting/edit_account.html', context)
 
-
+@login_required
 def edit_prospect(request, prospect_id):
     """Edit an existing prospect."""
     prospect = Prospect.objects.get(id=prospect_id)
@@ -120,6 +127,12 @@ def edit_prospect(request, prospect_id):
         form = ProspectForm(instance=prospect, data=request.POST)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect(reverse('prospecting:results', args=[account.id]))
+            return HttpResponseRedirect(reverse('prospecting:detail', args=[account.id]))
     context = {'prospect': prospect, 'account': account, 'form': form}
     return render(request, 'prospecting/edit_prospect.html', context)
+
+
+class IndustryList(generic.DetailView):
+    """View to list out the industrys an account belongs to."""
+
+    model = Industry

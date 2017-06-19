@@ -1,23 +1,27 @@
+{% extends "prospecting/base.html" %} {% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'prospecting/style.css' %}" /
+
+{% block content %}
 <a href="{% url 'prospecting:index' %}">Home</a> < <a href="{% url 'prospecting:detail' account.id%}">Account Details</a>
 <h1>{{ account.account_name }}</h1>
 <h1>Account Details:</h1>
-<p>Date Created: {{account.date_added}}<p>
+<p><strong>Date Created:</strong> {{account.date_added|date:'M d, Y H:i'}}<p>
 <ul>
-    <li>General E-mail: {{account.email}}</li>
-    <li>Phone: {{account.phone}}</li>
-    <li>Address:
+    <li><strong>General E-mail:</strong> {{account.email}}</li>
+    <li><strong>Phone:</strong> {{account.phone}}</li>
+    <strong><li>Address:</strong>
         <ul>
-        <li>Street: {{account.street}}</li>
-        <li>City: {{account.city}}</li>
-        <li>State: {{account.state}}</li>
-        <li>Zipcode: {{account.zipcode}}</li>
-        <li>Country: {{account.country}}</li>
+        <strong><li>Street:</strong> {{account.street}}</li>
+        <strong><li>City:</strong> {{account.city}}</li>
+        <strong><li>State:</strong> {{account.state}}</li>
+        <strong><li>Zipcode:</strong> {{account.zipcode}}</li>
+        <strong><li>Country:</strong> {{account.country}}</li>
     </ul>
     </li>
-    <li>Linked In: {{account.linkedin}}</li>
-    <li>Account Status: {{account.account_status}}</li>
+    <strong><li>Linked In:</strong> {{account.linkedin}}</li>
+    <strong><li>Account Status:</strong> {{account.account_status}}</li>
 </ul>
-<p>Notes: {{account.account_notes|linebreaks}}<p>
+<strong><p>Notes:</strong> {{account.account_notes|linebreaks}}<p>
 
 <a href="{% url 'prospecting:edit_account' account.id %}">Edit Account</a>
 
@@ -30,9 +34,10 @@
 {% for prospect in account.prospect_set.all %}
     <input type="radio" name="prospect" id="prospect{{ forloop.counter }}" value="{{ prospect.id }}" />
     <label for="prospect{{ forloop.counter }}">{{ prospect.full_name }}</label><br />
-    <a href="{% url 'prospecting:edit_prospect' prospect.id %}">Edit Prospect</a>
+    <small><a href="{% url 'prospecting:edit_prospect' prospect.id %}">Edit</a></small>
 {% endfor %}
-<br />
-<input type="submit" value="View" />
+<br /><br />
+<input type="submit" value="View" class="waves-effect waves-light btn" />
 </form>
 <a href="{% url 'prospecting:new_prospect' account.id%}">Add a new prospect:</a></p>
+{% endblock content %}
