@@ -1,12 +1,19 @@
 {% extends "prospecting/base.html" %} {% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'prospecting/style.css' %}" />
+
+{% block content %}
 <h1>{{ account.account_name }}</h1>
 
 <ul>
     {% for prospect in account.prospect_set.all %}
     <li>{{ prospect.full_name }} -- {{ prospect.prospect_views }} View{{ prospect.prospect_views | pluralize }}</li>
+    <li><strong>Prospect Title:</strong> {{ prospect.title}}</li>
+    <li><strong>E-mail:</strong> {{ prospect.email}}</li>
     <!-- <li>{{ prospect.full_name}}  {{ prospect.prospect_views }} View{{ prospect.selected_prospect | pluralize }}</li> -->
+
     {% endfor %}
 </ul>
 
 <a href="{% url 'prospecting:new_prospect' account.id%}">Add a new prospect:</a></p>
 <a href="{%  url 'prospecting:detail' account.id %}">View Another Prospect?</a>
+{% endblock content %}
