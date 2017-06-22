@@ -3,17 +3,31 @@
 
 {% block content %}
 <h1>{{ account.account_name }}</h1>
-
-<ul>
+<table class="bordered">
+        <thead>
+          <tr>
+              <th>Name</th>
+              <th>Title</th>
+              <th>Email</th>
+              <th>Phone</th>
+              <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
     {% for prospect in account.prospect_set.all %}
-    <li>{{ prospect.full_name }} -- {{ prospect.prospect_views }} View{{ prospect.prospect_views | pluralize }}</li>
-    <li><strong>Prospect Title:</strong> {{ prospect.title}}</li>
-    <li><strong>E-mail:</strong> {{ prospect.email}}</li>
-    <!-- <li>{{ prospect.full_name}}  {{ prospect.prospect_views }} View{{ prospect.selected_prospect | pluralize }}</li> -->
-
+    <tr>
+    <td>{{ prospect.full_name }}<td>
+    <td>{{ prospect.title}}</td>
+    <td>{{ prospect.email}}</td>
+    <td>{{ prospect.phone}}</td>
+    <td>{{ prospect.prospect_notes}}</td>
+            </tr>
     {% endfor %}
-</ul>
 
-<a href="{% url 'prospecting:new_prospect' account.id%}">Add a new prospect:</a></p>
-<a href="{%  url 'prospecting:detail' account.id %}">View Another Prospect?</a>
+</tbody>
+</table>
+<br/>
+<button class="waves-effect waves-light btn"><a href="{% url 'prospecting:new_prospect' account.id%}">Add a new prospect</a></button>
+<h4><a href="{%  url 'prospecting:detail' account.id %}">View Another Prospect?</a></h4>
+
 {% endblock content %}

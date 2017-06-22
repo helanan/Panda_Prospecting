@@ -58,6 +58,13 @@ def ProspectViewView(request, account_id):
         # hits the back button
     return HttpResponseRedirect(reverse('prospecting:results', args=(account.id,)))
 
+def single_prospect(request, prospect):
+    """View single prospect."""
+    all_prospects = Prospect.objects.all()
+    selected_prospect = all_prospects(id=pk)
+    context = {'selected_prospect': selected_prospect}
+    return render(request, 'prospecting/results.html', context)
+
 @login_required
 def new_account(request):
     """Add a new account."""

@@ -5,7 +5,6 @@ from django.utils import timezone
 
 # Create your models here.
 
-
 class Account(models.Model):
     """Adds an account model to our SQLite database."""
 
@@ -68,6 +67,8 @@ class Prospect(models.Model):
     prospect_status = models.CharField(max_length=30)
     prospect_notes = models.TextField()
     prospect_views = models.IntegerField(default=0)
+    prospect_website = models.URLField(max_length=30)
+
 
     class Meta:
         verbose_name_plural = 'prospects'

@@ -1,6 +1,16 @@
 {% extends "prospecting/base.html" %} {% load static %}
 <link rel="stylesheet" type="text/css" href="{% static 'prospecting/style.css' %}" /> {% block content %}
+<!-- header -->
+<nav>
+  <div class="nav-wrapper">
+    <div class="col s12">
+      <a href="#!" class="breadcrumb">Home</a>
+      <a href="#!" class="breadcrumb">Dashboard</a>
+    </div>
+  </div>
+</nav>
 
+<!-- endheader -->
 <ul class="collection with-header">
     <li class="collection-header">
         <h4>Outreach List</h4></li>
@@ -14,8 +24,4 @@
                         </div></li></li>
                 {% endfor %}
               </ul>
-
-<p>------</p>
-Email Templates:
-
 {% endblock content %}
