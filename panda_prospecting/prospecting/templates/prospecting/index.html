@@ -37,15 +37,15 @@
          <img src="static/prospecting/images/001-grass.svg" height="200">
        </div>
        <div class="card-content">
-         <p>Add a new Prospect</p>
+         <p>Go To Dashboard</p>
        </div>
        <div class="card-action">
-           <a href="{% url 'prospecting:index' %}" class="green-text"> ADD PROSPECT </a>
+           <a href="{% url 'prospecting:dashboard' %}" class="green-text"> PANDA DASHBOARD </a>
        </div>
          </div>
        </div>
        </div>
-<h1>My Latest Accounts</h1> {% if latest_account_list %}
+<h1>Latest Accounts Added</h1> {% if latest_account_list %}
 <ul>
     {% for account in latest_account_list %}
     <li><a href="{% url 'prospecting:detail' account.id %}">{{ account.account_name }}</a></li>

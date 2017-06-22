@@ -1,0 +1,21 @@
+{% extends "prospecting/base.html" %} {% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'prospecting/style.css' %}" /> {% block content %}
+
+<ul class="collection with-header">
+    <li class="collection-header">
+        <h4>Outreach List</h4></li>
+    {% for prospect in prospect %}
+    <li class="collection-item avatar"><img src="https://avatars.io/platform/userId" alt="" class="circle">
+        <div>{{prospect}}<br/><a href="mailto:{{prospect.email}}" class="secondary-content"><i class="material-icons">send</i></a> {{prospect.account}} -- {{prospect.title}}
+            <br/> {{prospect.phone}}
+            <br/>
+            <a href="{{prospect.linkedin}}">{{prospect.linkedin}}<br/>
+
+                        </div></li></li>
+                {% endfor %}
+              </ul>
+
+<p>------</p>
+Email Templates:
+
+{% endblock content %}

@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.views import generic
 from django.utils import timezone
 
-from .models import Prospect, Account, Industry
+from .models import Prospect, Account
 from .forms import AccountForm, ProspectForm
 
 
@@ -38,7 +38,6 @@ class DetailView(generic.DetailView):
 class ResultsView(generic.DetailView):
     model = Account
     template_name = 'prospecting/results.html'
-
 
 @login_required
 def ProspectViewView(request, account_id):
@@ -131,8 +130,9 @@ def edit_prospect(request, prospect_id):
     context = {'prospect': prospect, 'account': account, 'form': form}
     return render(request, 'prospecting/edit_prospect.html', context)
 
-
-class IndustryList(generic.DetailView):
-    """View to list out the industrys an account belongs to."""
-
-    model = Industry
+@login_required
+def dashboard(request):
+    """Analyses of accounts within a dashboard view."""
+    prospect = Prospect.objects.all()
+    context = {'prospect': prospect}
+    return render(request, 'prospecting/dashboard.html', context)
