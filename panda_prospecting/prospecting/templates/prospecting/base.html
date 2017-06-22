@@ -9,21 +9,22 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link type="text/css" rel="stylesheet" href="{% static 'materialize/bin/materialize.css' %}"  media="screen,projection"/>
+    <link href="https://fonts.googleapis.com/css?family=Abel|Abril+Fatface" rel="stylesheet">
 
     <title>Prospecting Panda</title>
+    <style>
+        body {
+            font-family: 'Abel', sans-serif;
+        }
+        </style>
 </head>
 <body>
+
     <!-- Static Navbar -->
-    <nav class="navbar navbar-default navbar-static-top">
-        <div class="container">
-            <div class="navbar-header">
-                <a class="navbar-brand" href="{% url 'prospecting:index' %}">
+    <nav class="nav-wrapper">
+                <a class="navbar-brand" href="{% url 'prospecting:index' %}" class="brand-logo center">
                     Prospecting Panda</a>
-                </div>
-                <div id="navbar" class="navbar-collapse collapse">
-                    <ul class="nav navbar-nav">
-                    </ul>
-                    <ul class="nav navbar-nav navbar-right">
+                    <ul class="right hide-on-med-and-down">
                         {% if user.is_authenticated %}
                         <li><a>Hello, {{ user.username }}.</a></li>
                         <li><a href="{% url 'users:logout' %}"> Log Out </a></li>
@@ -32,10 +33,9 @@
                         <li><a href="{% url 'users:login' %}"> Log In </a></li>
                         {% endif %}
                     </ul>
-                </div><!--/.nav-collapse-->
-
-            </div>
+                </div>
         </nav>
+    </div>
         <div class="container">
             <div class="page-header">
                 {% block header %}{% endblock header %}
@@ -45,6 +45,31 @@
             </div>
         </div> <!-- /container -->
         {% block footer %}
+        <footer class="page-footer">
+  <div class="container">
+    <div class="row">
+      <div class="col l6 s12">
+        <h5 class="white-text">Panda Prospecting</h5>
+        <p class="grey-text text-lighten-4"> Panda Prospecting is a database management application created to make sales prospecting easier and more streamlined. </p>
+      </div>
+      <div class="col l4 offset-l2 s12">
+        <h5 class="white-text">Links</h5>
+        <ul>
+          <li><a class="grey-text text-lighten-3" href="#!">Link 1</a></li>
+          <li><a class="grey-text text-lighten-3" href="#!">Link 2</a></li>
+          <li><a class="grey-text text-lighten-3" href="#!">Link 3</a></li>
+          <li><a class="grey-text text-lighten-3" href="#!">Link 4</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="footer-copyright">
+    <div class="container">
+    © 2017 Helana Nosrat Designs
+    <a class="grey-text text-lighten-4 right" href="https://helanan.com">HelanaNosrat.com</a>
+    </div>
+  </div>
+</footer>
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
     <script type="text/javascript" src="{% static 'materialize/bin/materialize.js' %}"></script>
 {% endblock %}

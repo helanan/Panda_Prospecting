@@ -1,5 +1,4 @@
 {% extends "prospecting/base.html" %}
-{% load bootstrap3 %}
 
 {% block header %}
 <h2>Log in to your account.</h2>
@@ -12,12 +11,11 @@
 
 <form method="post" action="{% url 'users:login' %}" class="form">
     {% csrf_token %}
-        {% bootstrap_form form %}
-    <!-- {{ form.as_p }} -->
+    {{ form.as_p }}
 
-    {% buttons %}
+
     <button name="submit" class="btn btn-primary"> Log In </button>
-    {% endbuttons %}
+
 
     <input type="hidden" name="next" value="{% url 'prospecting:index' %}" />
 </form>

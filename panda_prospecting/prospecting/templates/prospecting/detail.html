@@ -1,43 +1,63 @@
 {% extends "prospecting/base.html" %} {% load static %}
-<link rel="stylesheet" type="text/css" href="{% static 'prospecting/style.css' %}" /
+<link rel="stylesheet" type="text/css" href="{% static 'prospecting/style.css' %}" / {% block content %} <nav>
+<div class="nav-wrapper">
+    <div class="col s12">
+        <a href="{% url 'prospecting:index' %}" class="breadcrumb">Home</a>
+        <a href="{% url 'prospecting:detail' account.id%}" class="breadcrumb">Account Details</a>
+    </div>
+</div>
+</nav>
+<div class="row">
+    <div class="col s12 m7">
+        <div class="card">
+            <div class="card-image">
+                <img src="https://avatars.io/platform/userId">
+            </div>
+            <div class="card-content">
+                <h3 class="center-align">{{ account.account_name }}</h3>
+                <p><strong>Date Added:</strong> {{account.date_added|date:'M d, Y H:i'}}
+                    <p>
+                        <ul>
+                            <li><strong>General E-mail:</strong> {{account.email}}</li>
+                            <li><strong>Phone:</strong> {{account.phone}}</li>
+                            <h5><li>Address</li></h5>
+                            <ul>
+                                <strong><li>Street:</strong> {{account.street}}</li>
+                                <strong><li>City:</strong> {{account.city}}</li>
+                                <strong><li>State:</strong> {{account.state}}</li>
+                                <strong><li>Zipcode:</strong> {{account.zipcode}}</li>
+                                <strong><li>Country:</strong> {{account.country}}</li>
+                            </ul>
+                            </li>
+                            <strong><li>Linked In:</strong> {{account.linkedin}}</li>
+                            <strong><li>Account Status:</strong> {{account.account_status}}</li>
+                        </ul>
+                        <strong><h5>Notes</h5></strong> {{account.account_notes|linebreaks}}
 
-{% block content %}
-<a href="{% url 'prospecting:index' %}">Home</a> < <a href="{% url 'prospecting:detail' account.id%}">Account Details</a>
-<h1>{{ account.account_name }}</h1>
-<h1>Account Details:</h1>
-<p><strong>Date Created:</strong> {{account.date_added|date:'M d, Y H:i'}}<p>
-<ul>
-    <li><strong>General E-mail:</strong> {{account.email}}</li>
-    <li><strong>Phone:</strong> {{account.phone}}</li>
-    <strong><li>Address:</strong>
-        <ul>
-        <strong><li>Street:</strong> {{account.street}}</li>
-        <strong><li>City:</strong> {{account.city}}</li>
-        <strong><li>State:</strong> {{account.state}}</li>
-        <strong><li>Zipcode:</strong> {{account.zipcode}}</li>
-        <strong><li>Country:</strong> {{account.country}}</li>
-    </ul>
-    </li>
-    <strong><li>Linked In:</strong> {{account.linkedin}}</li>
-    <strong><li>Account Status:</strong> {{account.account_status}}</li>
-</ul>
-<strong><p>Notes:</strong> {{account.account_notes|linebreaks}}<p>
+            </div>
+            <div class="card-action">
+                <a href="{% url 'prospecting:edit_account' account.id %}">Edit Account</a>
+                <a href="#!">Delete Account</a>
+                <a href="{{prospect.prospect_website}}">Website</a>
+            </div>
+        </div>
+    </div>
+</div>
 
-<a href="{% url 'prospecting:edit_account' account.id %}">Edit Account</a>
 
-<h3>Available Prospects:</h3>
-
-{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+<h3>Available Prospects:</h3> {% if error_message %}
+<p><strong>{{ error_message }}</strong></p>{% endif %}
 
 <form action="{% url 'prospecting:prospect_view' account.id %}" method="post">
-{% csrf_token %}
-{% for prospect in account.prospect_set.all %}
-    <input type="radio" name="prospect" id="prospect{{ forloop.counter }}" value="{{ prospect.id }}" />
-    <label for="prospect{{ forloop.counter }}">{{ prospect.full_name }}</label><br />
-    <small><a href="{% url 'prospecting:edit_prospect' prospect.id %}">Edit</a></small>
-{% endfor %}
-<br /><br />
-<input type="submit" value="View" class="waves-effect waves-light btn" />
+    {% csrf_token %} {% for prospect in account.prospect_set.all %}
+    <p>
+        <label for="prospect{{ forloop.counter }}"><div class="chip"><img src="https://api.adorable.io/avatars/285/abott@adorable.io.png" alt="prospect_name">{{ prospect.full_name }}</div></label>
+        <small><a href="{% url 'prospecting:edit_prospect' prospect.id %}">Edit</a></small>
+    </p>
+    {% endfor %}
+    <br />
+    <button class="waves-effect waves-light btn"><a href="{%  url 'prospecting:results' account.id %}">View Prospects</a></button><br/><br/>
 </form>
-<a href="{% url 'prospecting:new_prospect' account.id%}">Add a new prospect:</a></p>
+<button class="waves-effect waves-light btn"><a href="{% url 'prospecting:new_prospect' account.id%}">New Prospect</a></button>
+</p>
 {% endblock content %}

@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.views import generic
 from django.utils import timezone
 
-from .models import Prospect, Account, Industry
+from .models import Prospect, Account
 from .forms import AccountForm, ProspectForm
 
 
@@ -39,7 +39,6 @@ class ResultsView(generic.DetailView):
     model = Account
     template_name = 'prospecting/results.html'
 
-
 @login_required
 def ProspectViewView(request, account_id):
     account = get_object_or_404(Account, pk=account_id)
@@ -58,6 +57,13 @@ def ProspectViewView(request, account_id):
         # with POST data. This prevents data from being posted twice if a user
         # hits the back button
     return HttpResponseRedirect(reverse('prospecting:results', args=(account.id,)))
+
+def single_prospect(request, prospect):
+    """View single prospect."""
+    all_prospects = Prospect.objects.all()
+    selected_prospect = all_prospects(id=pk)
+    context = {'selected_prospect': selected_prospect}
+    return render(request, 'prospecting/results.html', context)
 
 @login_required
 def new_account(request):
@@ -131,8 +137,9 @@ def edit_prospect(request, prospect_id):
     context = {'prospect': prospect, 'account': account, 'form': form}
     return render(request, 'prospecting/edit_prospect.html', context)
 
-
-class IndustryList(generic.DetailView):
-    """View to list out the industrys an account belongs to."""
-
-    model = Industry
+@login_required
+def dashboard(request):
+    """Analyses of accounts within a dashboard view."""
+    prospect = Prospect.objects.all()
+    context = {'prospect': prospect}
+    return render(request, 'prospecting/dashboard.html', context)
