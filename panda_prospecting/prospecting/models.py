@@ -22,6 +22,7 @@ class Account(models.Model):
     account_status = models.CharField(max_length=30)
     account_notes = models.TextField()
     industry = models.CharField(max_length=200)
+    account_website = models.URLField(max_length=30)
     owner = models.ForeignKey(User)
 
     class Meta:

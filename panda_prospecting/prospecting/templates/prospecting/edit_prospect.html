@@ -9,7 +9,7 @@
     <form action="{% url 'prospecting:edit_prospect' prospect.id%}" method='post'>
         {% csrf_token %}
         {{ form.as_p }}
-        <button name="submit" class="waves-effect waves-light btn"> Save Changes </button>
+        <button name="submit" class="waves-effect waves-light btn"> Save Changes </button><br/><br/>
     </form>
 
 {% endblock content %}
