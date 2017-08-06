@@ -1,0 +1,50 @@
+/* DASHBOARD */
+
+.dashboard .module table th {
+    width: 100%;
+    background-color: white;
+}
+
+.dashboard .module table td {
+    white-space: nowrap;
+    background-color: #A4BAB7;
+    border-radius: 8px;
+}
+
+td, th {
+    font-size: 13px;
+    line-height: 16px;
+    border: 4px solid #eee;
+    vertical-align: top;
+    padding: 14px;
+    font-family: "Roboto", "Lucida Grande", Verdana, Arial, sans-serif;
+}
+
+.dashboard .module table td a {
+    display: block;
+    padding-right: .6em;
+    background-color: #A4BAB7;
+}
+
+.module h2, .module caption, .inline-group h2 {
+    margin: 0;
+    padding: 8px;
+    font-weight: 400;
+    font-size: 13px;
+    text-align: left;
+    background: #009688;
+    color: #903333;
+}
+
+/* RECENT ACTIONS MODULE */
+
+.module ul.actionlist {
+    margin-left: 0;
+}
+
+ul.actionlist li {
+    list-style-type: none;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -o-text-overflow: ellipsis;
+}

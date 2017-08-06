@@ -26,8 +26,8 @@ class AccountAdmin(admin.ModelAdmin):
     list_display = ('account_name', 'date_added', 'email', 'phone', 'street', 'city',
                     'state', 'zipcode', 'country', 'linkedin', 'account_status', 'account_notes',
                     'was_added_recently')
-    list_filter = ['date_added']
-    search_fields = ['account_name']
+    list_filter = ['date_added', 'state', 'account_status']
+    search_fields = ['account_name', 'zipcode', 'city', 'date_added', 'state', 'account_status', 'country', 'street']
 
 
 admin.site.register(Account, AccountAdmin)
