@@ -1,22 +1,22 @@
 {% extends "prospecting/base.html" %} {% load static %}
-<link rel="stylesheet" type="text/css" href="{% static 'prospecting/style.css' %}" /
-
-{% block header %}
-<nav>
-  <div class="nav-wrapper">
-    <div class="col s12">
-      <a href="#!" class="breadcrumb">Home</a>
-      <a href="#!" class="breadcrumb">New Account</a>
-    </div>
+<link rel="stylesheet" type="text/css" href="{% static 'prospecting/style.css' %}" / {% block header %} <nav>
+<div class="nav-wrapper">
+  <div class="col s12">
+    <a href="#!" class="breadcrumb">Home</a>
+    <a href="#!" class="breadcrumb">New Account</a>
   </div>
+</div>
 </nav>
-    <h2>Add a new Account:</h2>
+<h2>Add a new Account:</h2>
 {% endblock header %}
 {% block content %}
 
-    <form action="{% url 'prospecting:new_account' %}" method='post'>
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button name="submit" class="waves-effect waves-light btn">add account</button>
-    </form>
+<form action="{% url 'prospecting:new_account' %}" method='post'>
+  {% csrf_token %}
+  {{ form.as_table }}
+  <br><br>
+  <button name="submit" class="waves-effect waves-light btn">add account</button>
+</form>
+
+
 {% endblock content %}

@@ -23,7 +23,7 @@ class Account(models.Model):
     account_notes = models.TextField()
     industry = models.CharField(max_length=200)
     account_website = models.URLField(max_length=30)
-    owner = models.ForeignKey(User)
+    owner = models.ForeignKey(User, on_delete=models.CASCADE)
 
     class Meta:
         verbose_name_plural = 'accounts'

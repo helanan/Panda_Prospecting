@@ -18,7 +18,7 @@ from django.contrib import admin
 admin.autodiscover()
 
 urlpatterns = [
-    url(r'^admin/', admin.site.urls),
-    url(r'^users/', include('users.urls', namespace='users')),
-    url(r'', include('prospecting.urls', namespace='prospecting')),
+     url(r'^admin/', admin.site.urls),
+    url(r'^users/', include(('users.urls', 'users'), namespace='users')),
+    url(r'', include(('prospecting.urls', 'prospecting'), namespace='prospecting')),
 ]
