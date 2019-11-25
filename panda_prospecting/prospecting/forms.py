@@ -5,10 +5,10 @@ from .models import Account, Prospect
 class AccountForm(forms.ModelForm):
     class Meta:
         model = Account
-        fields = ['account_name', 'date_added', 'email', 'phone', 'street', 'city', 'state', 'zipcode', 'country', 'linkedin', 'account_status', 'account_notes', 'account_website', 'owner']
+        fields = ['account_name', 'date_added', 'email', 'phone', 'street', 'city', 'state', 'zipcode', 'country', 'linkedin', 'account_status', 'owner', 'account_notes', 'account_website']
         labels = {'account_name': 'Account Name', 'date_added': 'Date Added', 'email': 'General Email', 'phone': 'General Phone',
                   'street': 'Street', 'city': 'City', 'state': 'State', 'zipcode': 'Zipcode',
-                  'country': 'Country', 'linkedin': 'LinkedIn', 'industry': 'Industry', 'account_status': 'Account Status', 'account_website': 'Account Website', 'account_notes': 'Account Notes', 'owner': 'owner'}
+                  'country': 'Country', 'linkedin': 'LinkedIn', 'industry': 'Industry', 'account_status': 'Account Status', 'account_website': 'Account Website', 'owner': 'owner', 'account_notes': 'Account Notes'}
 
 class ProspectForm(forms.ModelForm):
     class Meta:
